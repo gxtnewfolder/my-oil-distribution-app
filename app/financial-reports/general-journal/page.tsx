@@ -59,14 +59,6 @@ const GeneralJournalPage: React.FC = () => {
             onChange={handleDateChange}
             className="border rounded-md p-2"
           />
-          <button
-            onClick={() => {
-              /* Implement search logic here */
-            }}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2"
-          >
-            Search Now
-          </button>
         </div>
         <div className="text-gray-600">
           Total Journal Entries: {journalEntries.length}
@@ -127,7 +119,7 @@ const GeneralJournalPage: React.FC = () => {
       </div>
 
       {/* Pagination Controls */}
-      <div className="mt-4 flex justify-center">
+      {/* <div className="mt-4 flex justify-center">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
@@ -145,7 +137,7 @@ const GeneralJournalPage: React.FC = () => {
         >
           Next
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
