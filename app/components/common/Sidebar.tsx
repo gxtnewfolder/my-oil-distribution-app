@@ -11,7 +11,7 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <aside className="bg-gray-800 text-white h-screen p-8"> 
+    <aside className="bg-gray-800 text-white h-screen p-8 fixed"> 
       <h2 className="text-2xl font-semibold mb-4">Menu</h2>
       <ul>
         {menuItems.map(item => (
