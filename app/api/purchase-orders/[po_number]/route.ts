@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import sql from "mssql";
 
-export async function GET(request: NextRequest, { params }: { params: { poNumber: string } }) {
-  const poNumber = params.poNumber;
+export async function GET(request: NextRequest, { params }: { params: { po_number: string } }) {
+  const poNumber = params.po_number;
   const config = {
     user: 'miniprogroup2',        // Replace with your Azure SQL username
     password: 'inc.372g2',    // Replace with your Azure SQL password

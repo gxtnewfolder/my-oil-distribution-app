@@ -1,10 +1,11 @@
-"use client" // for next.js 13 and above to use client component
+// src/app/financial-reports/purchase-order/page.tsx
+"use client"; // For Next.js 13+
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { PurchaseOrder } from '@/types/financial'; // Make sure to define your PurchaseOrder type
+import { PurchaseOrder } from '@/types/financial';
 
 function PurchaseOrderPage() {
   const router = useRouter();
@@ -24,7 +25,7 @@ function PurchaseOrderPage() {
         setFilteredPOs(data);
       } catch (error) {
         console.error('Error fetching purchase orders:', error);
-        setError(error as Error); 
+        setError(error as Error);
       } finally {
         setIsLoading(false);
       }
@@ -34,13 +35,13 @@ function PurchaseOrderPage() {
 
   useEffect(() => {
     const filtered = purchaseOrders.filter(po =>
-      po.poNumber.toLowerCase().includes(searchQuery.toLowerCase())
+      po.po_number.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredPOs(filtered);
   }, [searchQuery, purchaseOrders]);
 
   const handleViewDetails = (poNumber: string) => {
-    router.push(`/financial-reports/purchase-order/${poNumber}`); // Navigate to details page
+    router.push(`/financial-reports/purchase-order/${poNumber}`); 
   };
 
   return (
@@ -52,10 +53,18 @@ function PurchaseOrderPage() {
       >
         Back
       </Link>
-      <h2 className="text-2xl font-semibold mb-4">Purchase Order</h2>
+      <h2 className="text-2xl font-semibold mb-4 my-4">Purchase Order</h2>
 
       {/* Search Bar */}
-      {/* ... (Search bar remains the same) ... */}
+      <div className="mb-4">
+        <input
+          type="text"
+          placeholder="Search by PO Number"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="border rounded-md p-2 w-full"
+        />
+      </div>
 
       {/* Conditional rendering for loading, error, or data */}
       {isLoading ? (
@@ -64,10 +73,10 @@ function PurchaseOrderPage() {
         <p className="text-red-500">Error: {error.message}</p>
       ) : filteredPOs.length > 0 ? (
         filteredPOs.map((po) => (
-          <div 
+          <div
             key={po.id} 
             className="bg-white rounded-lg shadow-md p-6 mb-4 cursor-pointer"
-            onClick={() => handleViewDetails(po.poNumber)} // Add onClick handler
+            onClick={() => handleViewDetails(po.po_number)} 
           >
             {/* Header Section */}
             <h3 className="text-xl text-center font-semibold mb-4">Purchase Order</h3>
@@ -81,15 +90,14 @@ function PurchaseOrderPage() {
                 />
               </div>
               <div className="text-right">
-                <p>PO No: {po.poNumber}</p>
-                <p>Invoice No: {po.invoiceNumber}</p>
-                <p>Date: {po.date}</p>
+                <p>PO No: {po.po_number}</p>
+                <p>Invoice No: {po.invoice}</p>
+                <p>Date: {po.datetime_created}</p>
               </div>
             </div>
 
             {/* Display only a summary of items */}
-            <p>Total Items: {po.items.length}</p> 
-            <p>Total Amount: {po.totalAmount}</p>
+            <p>Total Amount: {po.totolprice}</p>
 
             {/* ... (optional: display a few key item details) ... */}
           </div>
@@ -102,3 +110,4 @@ function PurchaseOrderPage() {
 }
 
 export default PurchaseOrderPage;
+
