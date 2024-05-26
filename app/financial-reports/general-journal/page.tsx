@@ -8,36 +8,26 @@ const GeneralJournalPage: React.FC = () => {
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]); // Initialize with empty array of type JournalEntry[]
   const [selectedDate, setSelectedDate] = useState("2022-03-01");
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const pageSize = 10; // Or whatever you set in your API
-
   useEffect(() => {
     const fetchData = async () => {
       try {
+        // Replace with your actual API endpoint
         const response = await fetch(
-          `/api/journal-entries?page=${currentPage}${
-            selectedDate ? `&date=${selectedDate}` : ""
-          }`
+          `/api/journal-entries${selectedDate ? `?date=${selectedDate}` : ""}`
         );
-        const data: { entries: JournalEntry[]; totalPages: number } =
-          await response.json();
-        setJournalEntries(data.entries);
-        setTotalPages(data.totalPages);
+        const data: JournalEntry[] = await response.json(); // Explicitly type the response data
+        setJournalEntries(data);
       } catch (error) {
-        // ... error handling ...
+        console.error("Error fetching journal entries:", error);
+        // Handle the error (e.g., display an error message to the user)
       }
     };
 
     fetchData();
-  }, [currentPage, selectedDate]);
+  }, [selectedDate]);
 
   const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedDate(event.target.value);
-  };
-
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage);
   };
 
   return (
