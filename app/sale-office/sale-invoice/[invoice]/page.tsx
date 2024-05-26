@@ -113,7 +113,7 @@ const InvoiceDetailsPage: React.FC = () => {
                   PRICE/LITER
                 </th>
                 <th className="px-6 py-3 bg-yellow-100 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Q'TY (LITER)
+                  QTY (LITER)
                 </th>
                 <th className="px-6 py-3 bg-yellow-100 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                   AMOUNT
