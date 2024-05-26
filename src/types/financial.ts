@@ -11,7 +11,12 @@ export interface JournalEntry {
 
 // Add other financial types as needed:
 export interface GeneralLedgerEntry {
-  // ...
+  id: string;
+  date: string; // ISO 8601 date format (e.g., '2024-05-26')
+  account: string;
+  debit: number;
+  credit: number;
+  balance: number;  // Add balance to the type
 }
 
 export interface IncomeStatementEntry {

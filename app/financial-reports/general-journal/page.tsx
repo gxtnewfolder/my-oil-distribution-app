@@ -6,7 +6,7 @@ import Link from "next/link"; // Import Link from Next.js
 
 const GeneralJournalPage: React.FC = () => {
   const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]); // Initialize with empty array of type JournalEntry[]
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState("2022-03-01");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -94,22 +94,19 @@ const GeneralJournalPage: React.FC = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-gray-500">
                   {entry.date}
                 </td>
-                <td className="px-6 py-4 whitespace-pre-line">
-                  {/* Nullish Coalescing and Optional Chaining */}
+                <td className="px-6 py-2 whitespace-pre-line">
+                  {/* Nullish Coalescing and Optional Chaining, removed extra space */}
                   {(entry.account ?? "").split("\n").map((line, index) => (
-                    <div
-                      key={index}
-                      className={index > 0 ? "ml-16" : ""} // Add margin if not the first line
-                    >
-                      {line}
-                    </div>
+                    <div key={index} className={index > 0 ? "ml-20 mt-4" : ""}>{line}</div>
                   ))}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{entry.refno}</td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">
+                <td className="px-6 py-4 whitespace-nowrap text-gray-500">
+                  {entry.refno}
+                </td>
+                <td className="px-6 py-4 text-right align-text-top"> {/* Add align-text-top */}
                   {entry.debit}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">
+                <td className="px-6 py-4 text-right align-bottom">
                   {entry.credit}
                 </td>
               </tr>
