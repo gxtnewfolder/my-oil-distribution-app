@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../src/styles/globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 import Sidebar from "@app/components/common/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -30,6 +31,7 @@ export default function RootLayout({
           <div className="container mx-auto p-4 ml-60">
             {children}
             <SpeedInsights />
+            <Analytics/>
           </div>
         </div>
       </body>

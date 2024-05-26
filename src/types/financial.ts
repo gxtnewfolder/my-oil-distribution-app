@@ -44,7 +44,21 @@ export interface StockData {
 }
 
 export interface PurchaseOrder {
-  // ...
+  id: string; 
+  poNumber: string;
+  invoiceNumber: string;
+  date: string;
+  customerId: string;
+  customerName: string;
+  taxPayerId: string;
+  items: {
+    id: string;
+    name: string;
+    pricePerLiter: number;
+    quantity: number;
+    amount: number;
+  }[];
+  totalAmount: number;
 }
 
 export interface Invoice {
