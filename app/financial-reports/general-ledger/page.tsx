@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const GeneralLedger: React.FC = () => {
   const [ledgerData, setLedgerData] = useState<GeneralLedgerEntry[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedAccount, setSelectedAccount] = useState("Account Receivable");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -23,7 +23,7 @@ const GeneralLedger: React.FC = () => {
         setLedgerData(data);
       } catch (error) {
         console.error("Error fetching ledger data:", error);
-        setError(error as Error); 
+        setError(error as Error);
       } finally {
         setIsLoading(false);
       }
@@ -32,9 +32,12 @@ const GeneralLedger: React.FC = () => {
     fetchData();
   }, []);
 
-  const filteredLedgerData = ledgerData.filter(
-    (entry) =>
-      entry.account?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredLedgerData = ledgerData.filter((entry) =>
+    entry.account?.toLowerCase().includes(selectedAccount.toLowerCase())
+  );
+
+  const uniqueAccountNames = Array.from(
+    new Set(ledgerData.map((entry) => entry.account))
   );
 
   return (
@@ -49,13 +52,19 @@ const GeneralLedger: React.FC = () => {
       {/* Search Section */}
       <div className="bg-white rounded-lg shadow-md p-4 mb-4">
         <div className="flex">
-          <input
-            type="text"
-            placeholder="Search by Account"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+          <select
+            value={selectedAccount} // Use selectedAccount state
+            onChange={(e) => setSelectedAccount(e.target.value)}
             className="border rounded-md p-2 mr-2 flex-grow"
-          />
+          >
+            <option value="">Select Account</option>
+            {/* Map over unique account names */}
+            {uniqueAccountNames.map((accountName) => (
+              <option key={accountName} value={accountName}>
+                {accountName}
+              </option>
+            ))}
+          </select>
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Search Now
           </button>
@@ -78,7 +87,7 @@ const GeneralLedger: React.FC = () => {
                 DATE
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                ACCOUNT - DESCRIPTION
+                ACCOUNT Type
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 DEBIT
@@ -109,7 +118,7 @@ const GeneralLedger: React.FC = () => {
                 {/* Calculate and display the balance here */}
                 {/* Assuming your API provides the balance or you calculate it on the frontend */}
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {entry.balance || 0} 
+                  {entry.balance || 0}
                 </td>
               </tr>
             ))}

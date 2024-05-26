@@ -1,11 +1,9 @@
-// app/api/general-ledger/route.ts
+// app/api/monthly-income-statement/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import sql from 'mssql';
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const account = searchParams.get('account'); // Get optional account filter
-
+export async function GET() { // No need for the request parameter
+  
   // Azure SQL Database Configuration (Load from environment variables)
   const config = {
     user: 'miniprogroup2',        // Replace with your Azure SQL username
@@ -20,16 +18,21 @@ export async function GET(request: NextRequest) {
   try {
     await sql.connect(config);
 
-    const query = account
-      ? `SELECT * FROM LedgerEntries WHERE account = '${account}'`
-      : `SELECT * FROM LedgerEntries`; // Query with or without date filter
+    // SQL Query to get current month's income statement
+    const query = `
+      SELECT TOP 1 * 
+      FROM incomestate
+    `; // Assuming 'id' is your primary key and you want the latest record
 
     const result = await sql.query(query);
 
-    return NextResponse.json(result.recordset); 
+    if (result.recordset.length === 0) {
+      return NextResponse.json({ message: "No income statement data found" }, { status: 404 });
+    }
+
+    return NextResponse.json(result.recordset[0]); 
   } catch (err) {
-    console.error('Error querying database:', err);
-    return NextResponse.json({ error: 'Database query failed' }, { status: 500 });
+    console.error("Error querying database:", err);
+    return NextResponse.json({ error: "Database query failed" }, { status: 500 });
   }
 }
-

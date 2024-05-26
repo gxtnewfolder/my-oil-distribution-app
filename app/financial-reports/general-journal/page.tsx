@@ -68,9 +68,6 @@ const GeneralJournalPage: React.FC = () => {
                 Account Title and Explanation
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                REF NO.
-              </th>
-              <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 DEBIT
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -89,9 +86,6 @@ const GeneralJournalPage: React.FC = () => {
                   {(entry.account ?? "").split("\n").map((line, index) => (
                     <div key={index} className={index > 0 ? "ml-20 mt-4" : ""}>{line}</div>
                   ))}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-gray-500">
-                  {entry.refno}
                 </td>
                 <td className="px-6 py-4 text-right align-text-top"> {/* Add align-text-top */}
                   {entry.debit}
