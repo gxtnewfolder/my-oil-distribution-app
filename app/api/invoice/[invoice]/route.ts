@@ -1,9 +1,9 @@
-// app/api/purchase-orders/[po_number]/route.ts
+// app/api/purchase-orders/[invoice]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import sql from 'mssql';
 
-export async function GET(request: NextRequest, { params }: { params: { po_number: string } }) {
-  const po_number = params.po_number; // Get po_number from the URL
+export async function GET(request: NextRequest, { params }: { params: { invoice: string } }) {
+  const invoice = params.invoice; // Get invoice from the URL
 
   // Azure SQL Database Configuration
   const config = {
@@ -21,13 +21,13 @@ export async function GET(request: NextRequest, { params }: { params: { po_numbe
 
     // Prepare request
     const request = new sql.Request();
-    request.input('po_number', sql.NVarChar, po_number);
+    request.input('invoice', sql.NVarChar, invoice);
 
-    // SQL Query to fetch a single purchase order by po_number
+    // SQL Query to fetch a single purchase order by invoice
     const query = `
       SELECT *
       FROM PurchaseOrders 
-      WHERE po_number = @po_number
+      WHERE invoice = @invoice
     `; 
 
     const result = await request.query(query);
@@ -37,9 +37,9 @@ export async function GET(request: NextRequest, { params }: { params: { po_numbe
       return NextResponse.json({ message: 'Purchase order not found' }, { status: 404 }); 
     }
 
-    const purchaseOrder = result.recordset[0];
+    const Invoice = result.recordset[0];
 
-    return NextResponse.json(purchaseOrder);
+    return NextResponse.json(Invoice);
   } catch (err) {
     console.error('Error querying database:', err);
     return NextResponse.json({ error: 'Database query failed' }, { status: 500 });

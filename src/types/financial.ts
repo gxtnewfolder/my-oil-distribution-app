@@ -46,15 +46,18 @@ export interface StockData {
 export interface PurchaseOrder {
   id: string; 
   po_number: string;
-  invoice: number;
+  invoice: string;
   datetime_created: string;
   customerID: string;
+  company : string;
   customerName: string;
   tax_payer_id: number;
   gastype: string;
   PperLitre: number;
   volumn: number;
   totolprice: number;
+  vat7: number;
+  total_include_vat: number;
 }
 
 export interface Invoice {

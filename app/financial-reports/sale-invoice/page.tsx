@@ -1,15 +1,13 @@
-// src/app/financial-reports/purchase-order/page.tsx
-"use client"; // For Next.js 13+
-
-import React, { useState, useEffect } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { PurchaseOrder } from "@/types/financial";
+import { PurchaseOrder } from "@/types/financial"; // Define your SaleInvoice type
 
-function PurchaseOrderPage() {
+function SaleInvoicePage() {
   const router = useRouter();
-  const [purchaseOrders, setPurchaseOrders] = useState<PurchaseOrder[]>([]);
-  const [filteredPOs, setFilteredPOs] = useState<PurchaseOrder[]>([]);
+  const [saleInvoices, setSaleInvoices] = useState<PurchaseOrder[]>([]);
+  const [filteredInvoices, setFilteredInvoices] = useState<PurchaseOrder[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -18,12 +16,12 @@ function PurchaseOrderPage() {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch("/api/purchase-orders"); // Replace with your API endpoint
+        const response = await fetch("/api/invoice"); // Fetch data from API
         const data = await response.json();
-        setPurchaseOrders(data);
-        setFilteredPOs(data);
+        setSaleInvoices(data);
+        setFilteredInvoices(data);
       } catch (error) {
-        console.error("Error fetching purchase orders:", error);
+        console.error("Error fetching sale invoices:", error);
         setError(error as Error);
       } finally {
         setIsLoading(false);
@@ -33,14 +31,14 @@ function PurchaseOrderPage() {
   }, []);
 
   useEffect(() => {
-    const filtered = purchaseOrders.filter((po) =>
-      po.po_number.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = saleInvoices.filter((invoice) =>
+      invoice.invoice.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    setFilteredPOs(filtered);
-  }, [searchQuery, purchaseOrders]);
+    setFilteredInvoices(filtered);
+  }, [searchQuery, saleInvoices]);
 
-  const handleViewDetails = (poNumber: string) => {
-    router.push(`/financial-reports/purchase-order/${poNumber}`); // Navigate to details page
+  const handleViewDetails = (invoice: string) => {
+    router.push(`/financial-reports/sale-invoice/${invoice}`);
   };
 
   return (
@@ -51,25 +49,25 @@ function PurchaseOrderPage() {
       >
         Back
       </Link>
-      <h2 className="text-2xl font-semibold mb-4 my-4">Purchase Order</h2>
+      <h2 className="text-2xl font-semibold mb-4 my-4">Invoice</h2>
 
       {/* Search Bar */}
       <div className="mb-4">
         <input
           type="text"
-          placeholder="Search by PO Number"
+          placeholder="Search by Invoice"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="border rounded-md p-2 w-full"
         />
       </div>
 
-      {/* Purchase Orders Table */}
+      {/* Invoice Table */}
       {isLoading ? (
-        <p>Loading purchase orders...</p>
+        <p>Loading invoice...</p>
       ) : error ? (
         <p className="text-red-500">Error: {error.message}</p>
-      ) : filteredPOs.length > 0 ? (
+      ) : filteredInvoices.length > 0 ? (
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
@@ -77,10 +75,10 @@ function PurchaseOrderPage() {
                 Date
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                PO Number
+                Invoice Number
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Customer Name
+                Company
               </th>
               <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Total Amount
@@ -88,18 +86,18 @@ function PurchaseOrderPage() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {filteredPOs.map((po) => (
+            {filteredInvoices.map((po) => (
               <tr
                 key={po.id}
-                onClick={() => handleViewDetails(po.po_number)} // Navigate on row click
+                onClick={() => handleViewDetails(po.invoice)} // Navigate on row click
                 className="cursor-pointer hover:bg-gray-100" // Visual feedback
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   {po.datetime_created.split(".")[0]}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{po.po_number}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{po.invoice}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  {po.customerName}
+                  {po.company}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">{po.totolprice.toFixed(2)}</td>
               </tr>
@@ -113,4 +111,5 @@ function PurchaseOrderPage() {
   );
 }
 
-export default PurchaseOrderPage;
+export default SaleInvoicePage;
+

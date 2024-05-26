@@ -50,7 +50,7 @@ const GeneralLedger: React.FC = () => {
       </Link>
 
       {/* Search Section */}
-      <div className="bg-white rounded-lg shadow-md p-4 mb-4">
+      <div className="bg-white rounded-lg shadow-md p-4 mb-4 mt-4">
         <div className="flex">
           <select
             value={selectedAccount} // Use selectedAccount state

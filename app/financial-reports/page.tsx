@@ -11,7 +11,7 @@ const FinancePage: React.FC = () => {
     { title: 'Monthly Income Statement', icon: '📈', text: 'Click to View at Each Month', path: '/financial-reports/monthly-income-statement' },
     { title: 'Inventory Stock Card', icon: '📦', text: 'Click to View at Each Month', path: '/financial-reports/inventory-stock-card' },
     { title: 'Purchase Order', icon: '📝', text: 'Click to View More', path: '/financial-reports/purchase-order' },
-    { title: 'Invoice', icon: '🧾', text: 'Click to View More', path: '/finance/invoice' },
+    { title: 'Invoice', icon: '🧾', text: 'Click to View More', path: '/financial-reports/sale-invoice' },
   ];
 
   return (

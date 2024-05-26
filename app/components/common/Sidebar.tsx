@@ -8,6 +8,7 @@ const Sidebar: React.FC = () => {
     { name: 'Home', path: '/' },
     { name: 'Finance', path: '/financial-reports' },
     { name: 'Dashboard', path: '/dashboard' },
+    { name: 'Sale Office', path: '/sale-office' },
   ];
 
   return (
