@@ -35,7 +35,7 @@ const Dashboard: React.FC = () => {
         <iframe
           title="Performance Dashboard"
           className="w-full h-[75vh] mt-8 border-4 border-gray-400 rounded-lg overflow-hidden"
-          src="https://app.powerbi.com/view?r=eyJrIjoiYmU0OWE1MTgtOWZlMS00YWI3LTgwMzUtOTU0NWE0N2Y0N2RlIiwidCI6IjZmNDQzMmRjLTIwZDItNDQxZC1iMWRiLWFjMzM4MGJhNjMzZCIsImMiOjEwfQ%3D%3D"
+          src="https://app.powerbi.com/view?r=eyJrIjoiMWYwZWVkOWQtNGQ0ZC00MDYwLTg0NjctMWVhZTczMjViNDI2IiwidCI6IjZmNDQzMmRjLTIwZDItNDQxZC1iMWRiLWFjMzM4MGJhNjMzZCIsImMiOjEwfQ%3D%3D"
           frameBorder="0"
           allowFullScreen
         />
